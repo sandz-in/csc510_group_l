@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
@@ -82,6 +83,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View arg0)
     {
+        Editable str=input.getText();
+        switch(arg0.getId())
+        {
+            case R.id.bt1:
+                str=str.append(one.getText());
+                input.setText(str);
+            break;
+            case R.id.bt2:
+                str=str.append(two.getText());
+                input.setText(str);
+            break;
+            case R.id.bt3:
+                str=str.append(three.getText());
+                input.setText(str);
+            break;
+            case R.id.bt4:
+                str=str.append(four.getText());
+                input.setText(str);
+            break;
+            case R.id.bt5:
+                str=str.append(five.getText());
+                input.setText(str);
+            break;
+            case R.id.bt6:
+                str=str.append(six.getText());
+                input.setText(str);
+            break;
+            case R.id.bt7:
+                str=str.append(seven.getText());
+                input.setText(str);
+            break;
+            case R.id.bt8:
+                str=str.append(eight.getText());
+                input.setText(str);
+            break;
+            case R.id.bt9:
+                str=str.append(nine.getText());
+                input.setText(str);
+            break;
+            case R.id.bt10:
+                str=str.append(zero.getText());
+                input.setText(str);
+            break;
+            case R.id.btDecimal:
+                str=str.append(decimal.getText());
+                input.setText(str);
+            break;
+            case R.id.btReset:
+                input.setText("");
+            break;
+            case R.id.btDelete:
+                int len=str.length();
+                String text=input.getText().toString().trim();
+                text=text.substring(0, len -1);
+                input.setText(text);
+            break;
+
+        }
 
     }
 
