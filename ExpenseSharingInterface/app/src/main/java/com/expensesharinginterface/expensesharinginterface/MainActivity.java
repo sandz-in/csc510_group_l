@@ -89,46 +89,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt1:
                 str=str.append(one.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt2:
                 str=str.append(two.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt3:
                 str=str.append(three.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt4:
                 str=str.append(four.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt5:
                 str=str.append(five.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt6:
                 str=str.append(six.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt7:
                 str=str.append(seven.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt8:
                 str=str.append(eight.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt9:
                 str=str.append(nine.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.bt10:
                 str=str.append(zero.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.btDecimal:
                 str=str.append(decimal.getText());
                 input.setText(str);
+                input.setSelection(str.length());
             break;
             case R.id.btReset:
                 input.setText("");
@@ -138,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String text=input.getText().toString().trim();
                 text=text.substring(0, len -1);
                 input.setText(text);
+                input.setSelection(text.length());
             break;
 
         }
