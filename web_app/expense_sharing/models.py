@@ -49,3 +49,12 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class Expenses(models.Model):
+    amount = models.FloatField()
+    description = models.CharField(max_length=512)
+    user = models.ForeignKey(User)
+    # image = models.ImageField()
+    # notes = models.CharField(max_length=1024)
+    added_on = models.DateField()
