@@ -132,9 +132,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 input.setSelection(str.length());
             break;
             case R.id.bt10:
-                str=str.append(zero.getText());
-                input.setText(str);
-                input.setSelection(str.length());
+                if(str.length()>0) {
+                    str = str.append(zero.getText());
+                    input.setText(str);
+                    input.setSelection(str.length());
+                }
             break;
             case R.id.btDecimal:
                 String text2=str.toString().trim();
