@@ -1,5 +1,4 @@
-from __future__ import unicode_literals
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser
 
 from django.db import models
 
@@ -19,7 +18,7 @@ class User(AbstractBaseUser):
     last_name = models.CharField(default=False, max_length=32)
     cell_no = models.CharField(default=False, max_length=32)
 
-    objects = MyUserManager
+    objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
 

@@ -1,5 +1,6 @@
-__author__ = 'sandz'
 from django.contrib.auth.models import BaseUserManager
+
+__author__ = 'sandz'
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
