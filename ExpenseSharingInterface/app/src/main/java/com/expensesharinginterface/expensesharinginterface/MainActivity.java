@@ -137,19 +137,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 input.setSelection(str.length());
             break;
             case R.id.btDecimal:
-                str=str.append(decimal.getText());
-                input.setText(str);
-                input.setSelection(str.length());
+                String text2=str.toString().trim();
+                if(text2.indexOf(".")<0) {
+                    str = str.append(decimal.getText());
+                    input.setText(str);
+                    input.setSelection(str.length());
+                }
             break;
             case R.id.btReset:
                 input.setText("");
             break;
             case R.id.btDelete:
                 int len=str.length();
-                String text=input.getText().toString().trim();
-                text=text.substring(0, len -1);
-                input.setText(text);
-                input.setSelection(text.length());
+                if(len>0) {
+                    String text = input.getText().toString().trim();
+                    text = text.substring(0, len - 1);
+                    input.setText(text);
+                    input.setSelection(text.length());
+                }
             break;
 
         }
