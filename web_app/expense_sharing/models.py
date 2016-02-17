@@ -57,4 +57,4 @@ class Expenses(models.Model):
     currency = models.CharField(max_length=8)
     # image = models.ImageField()
     # notes = models.CharField(max_length=1024)
-    added_on = models.DateField()
+    added_on = models.DateTimeField()
