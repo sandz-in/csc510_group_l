@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('djoser.urls')),
+    url(r'', include('expense_sharing.api_urls')),
     url(r'^auth/', include('djoser.urls.authtoken')),
 ]
