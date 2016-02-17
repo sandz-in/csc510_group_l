@@ -42,3 +42,25 @@ class ExpenseShowAPI(views.APIView):
                 return HttpResponse(json.dumps(expense_dict), content_type="application/json")
         except Exception as e:
             print e
+
+
+class ExpensesAddAPI(views.APIView):
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+
+    def post(self, request):
+        result = {"result": "success", "message": "Successfully added"}
+        try:
+            user = request.user
+            expense = Expenses()
+            expense.amount = request.POST.get("amount")
+            expense.currency = request.POST.get("currency")
+            expense.description = request.POST.get("description")
+            expense.user = user
+            expense.save()
+        except Exception as e:
+            result["result"] = "failure"
+            result["message"] = "Failed to apply"
+            print e
+        return HttpResponse(json.dumps(result), content_type="application/json")
