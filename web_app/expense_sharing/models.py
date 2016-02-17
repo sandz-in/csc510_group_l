@@ -54,6 +54,7 @@ class Expenses(models.Model):
     amount = models.FloatField()
     description = models.CharField(max_length=512)
     user = models.ForeignKey(User)
+    currency = models.CharField(max_length=8)
     # image = models.ImageField()
     # notes = models.CharField(max_length=1024)
     added_on = models.DateField()
