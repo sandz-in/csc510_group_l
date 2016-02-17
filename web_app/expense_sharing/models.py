@@ -1,5 +1,4 @@
-from __future__ import unicode_literals
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser
 
 from django.db import models
 
@@ -19,7 +18,7 @@ class User(AbstractBaseUser):
     last_name = models.CharField(default=False, max_length=32)
     cell_no = models.CharField(default=False, max_length=32)
 
-    objects = MyUserManager
+    objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
 
@@ -49,3 +48,13 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class Expenses(models.Model):
+    amount = models.FloatField()
+    description = models.CharField(max_length=512)
+    user = models.ForeignKey(User)
+    currency = models.CharField(max_length=8)
+    # image = models.ImageField()
+    # notes = models.CharField(max_length=1024)
+    added_on = models.DateTimeField(auto_now_add=True)
