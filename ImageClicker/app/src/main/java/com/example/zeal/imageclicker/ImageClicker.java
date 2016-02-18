@@ -3,18 +3,27 @@ package com.example.zeal.imageclicker;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
+
+import java.io.File;
+
 public class ImageClicker extends AppCompatActivity {
+    public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/tee/";
+    public static final String lang = "eng";
+    private static final String TAG = "ImageClicker.java";
 
     Button btnClick;
     ImageView imgTakenPic;
@@ -25,10 +34,40 @@ public class ImageClicker extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CAM_REQUEST)
-        {
+        if (requestCode == CAM_REQUEST) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             imgTakenPic.setImageBitmap(thumbnail);
+            TessBaseAPI baseApi = new TessBaseAPI();
+            baseApi.setDebug(true);
+//            String[] paths = new String[]{DATA_PATH, DATA_PATH + "tessdata/"};
+            try {
+//                for (String path : paths) {
+//                    File dir = new File(path);
+//                    Log.i("x,", "PATH ==" + path);
+//                    Log.i(TAG, path + " " + dir.exists());
+//                    if (!dir.exists()) {
+//                        if (!dir.mkdirs()) {
+//                        } else {
+//                            Log.v(TAG, "Created directory " + path + " on sdcard");
+//                        }
+//                    }
+//                }
+
+                baseApi.init(DATA_PATH, lang);
+                if (baseApi != null) { //NOTEEE
+                    String characterWhitelist = "$.,;:'\"0123456789";
+                    String characterBlacklist = "";
+//                    baseApi.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, characterBlacklist); //ERROR!!
+//                    baseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, characterWhitelist);
+                }
+
+            } catch (Exception e) {
+                Log.e("sd", e.getMessage());
+                e.printStackTrace();
+            }
+            baseApi.setImage(thumbnail);
+            String x = baseApi.getUTF8Text();
+            Log.i("dd", x == null ? "dddd" : x);
         }
     }
 
@@ -39,7 +78,7 @@ public class ImageClicker extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,14 +103,13 @@ public class ImageClicker extends AppCompatActivity {
     }
 
 
-    class btnClickClicker implements Button.OnClickListener
-    {
+    class btnClickClicker implements Button.OnClickListener {
 
         @Override
         public void onClick(View v) {
 
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent,CAM_REQUEST);
+            startActivityForResult(cameraIntent, CAM_REQUEST);
         }
     }
 }
