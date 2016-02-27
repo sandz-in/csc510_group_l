@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.expensetracking.api.RestAdapter;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -29,14 +31,22 @@ import java.util.ArrayList;
 public class HomeScreen extends Activity {
     EditText un, pw;
     TextView error;
-    Button ok,register;
+    Button ok, register;
     private String resp;
     private String errorMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences settings = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
 
+        String auth_token = settings.getString("auth_token", null);
+        if (auth_token != null) {
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(intent);
+            return;
+        }
         setContentView(R.layout.activity_home_screen);
         un = (EditText) findViewById(R.id.et_un);
         pw = (EditText) findViewById(R.id.et_pw);
@@ -60,7 +70,7 @@ public class HomeScreen extends Activity {
 
                         String response = null;
                         try {
-                            HttpPost hp = new HttpPost("http://192.168.0.106:8000/auth/login/");
+                            HttpPost hp = new HttpPost(RestAdapter.URL + "/auth/login/");
                             hp.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
                             HttpClient ahc = new DefaultHttpClient();
 
@@ -86,7 +96,9 @@ public class HomeScreen extends Activity {
                             editor.putString("auth_token", token);
                             editor.commit();
 
-                            Log.i("Success", token);
+                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                            startActivity(intent);
+
                             resp = res.replaceAll("\\s+", "");
 
                         } catch (Exception e) {
@@ -138,7 +150,8 @@ public class HomeScreen extends Activity {
     }
 
 
-    public void onRegButtonClick (View view)
-    {
+    public void onRegButtonClick(View view) {
+//        Intent intent = new Intent(view.getContext(), UserRegister.class);
+//        startActivity(intent);
     }
 }

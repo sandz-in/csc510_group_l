@@ -2,8 +2,7 @@
     <string name="app_name">ExpenseTracking</string>
 
 
-    <string name="hello">View Companies</string>
-    <string name="applied_companies">View Applied Companies</string>
+    <string name="expenses">Expenses</string>
 
     <string name="logout">Logout</string>
     <string name="title_activity_dashboard">Home</string>
