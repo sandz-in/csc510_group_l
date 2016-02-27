@@ -9,6 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,13 +40,24 @@ public class MyActivity extends Activity {
 
     private void getSMSes() {
         final ListView list = (ListView) findViewById(R.id.smsView);
+        List bills=new ArrayList();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         Cursor cursor = getContentResolver().query(Uri.parse(SMS_INBOX_CONTENT_URI), null, null, null, SORT_ORDER);
         Integer retIndex;
         if (cursor.moveToFirst()) { // must check the result to prevent exception
             do {
                 String msgData=cursor.getString(SMS_BODY_INDEX);
-                adapter.add(msgData);
+                Number number=null;
+                try {
+                    number = NumberFormat.getCurrencyInstance(Locale.US).parse(msgData);
+                } catch(ParseException pe) {
+                    number=null;
+                }
+                if(number!=null) {
+                    logger.log(Level.INFO, ": "+msgData+" : matches the regex pattern");
+                    adapter.add(msgData);
+                    bills.add(msgData);
+                }
                 // use msgData
                 logger.log(Level.INFO, msgData);
             } while (cursor.moveToNext());
