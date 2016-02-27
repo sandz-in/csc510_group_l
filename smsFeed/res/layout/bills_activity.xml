@@ -4,4 +4,24 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="null"
+            android:id="@+id/displayAmount"
+            android:layout_gravity="center_horizontal"
+            />
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you sure to add this bill?"
+            android:id="@+id/confirm"
+            android:layout_gravity="center_horizontal"
+            />
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Bill"
+            android:id="@+id/addBillAmount"
+            android:layout_gravity="center_horizontal" />
 </LinearLayout>
