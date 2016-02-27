@@ -1,10 +1,12 @@
 package com.example.smsFeed;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -26,20 +28,29 @@ public class MyActivity extends Activity {
     private static final String SORT_ORDER="date desc";
     private static final String SMS_INBOX_CONTENT_URI="content://sms/inbox";
     private static final Integer SMS_BODY_INDEX=12;
+    private ListView list;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         final Button activityButton = (Button) findViewById(R.id.gtSMS);
+        list = (ListView) findViewById(R.id.smsView);
         activityButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getSMSes();
+                //sendIntent();
             }
         });
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                sendIntent();
+            }
+        });
+
     }
 
     private void getSMSes() {
-        final ListView list = (ListView) findViewById(R.id.smsView);
         List bills=new ArrayList();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         Cursor cursor = getContentResolver().query(Uri.parse(SMS_INBOX_CONTENT_URI), null, null, null, SORT_ORDER);
@@ -65,5 +76,10 @@ public class MyActivity extends Activity {
         } else {
             // empty box, no SMS
         }
+    }
+
+    private void sendIntent() {
+        Intent intent = new Intent(this, BillsActivity.class);
+        startActivity(intent);
     }
 }
