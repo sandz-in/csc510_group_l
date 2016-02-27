@@ -12,30 +12,72 @@ import android.view.View;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
+import android.text.TextWatcher;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset, next;
+    private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;
+    private static Button next;
     private EditText input;
+   /* public void onClickButtonListener()
+    {
+        next=(Button) findViewById(R.id.btNext);
+        next.setOnClickListener( new View.OnClickListener(){
+
+        });
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        one=(Button) findViewById(R.id.bt1);
-        two=(Button) findViewById(R.id.bt2);
-        three=(Button) findViewById(R.id.bt3);
-        four=(Button) findViewById(R.id.bt4);
-        five=(Button) findViewById(R.id.bt5);
-        six=(Button) findViewById(R.id.bt6);
-        seven=(Button) findViewById(R.id.bt7);
-        eight=(Button) findViewById(R.id.bt8);
-        nine=(Button) findViewById(R.id.bt9);
-        zero=(Button) findViewById(R.id.bt10);
-        decimal=(Button) findViewById(R.id.btDecimal);
-        delete=(Button) findViewById(R.id.btReset);
-        reset=(Button) findViewById(R.id.btDelete);
-        next=(Button) findViewById(R.id.btNext);
-        input=(EditText) findViewById(R.id.amount);
+        one = (Button) findViewById(R.id.bt1);
+        two = (Button) findViewById(R.id.bt2);
+        three = (Button) findViewById(R.id.bt3);
+        four = (Button) findViewById(R.id.bt4);
+        five = (Button) findViewById(R.id.bt5);
+        six = (Button) findViewById(R.id.bt6);
+        seven = (Button) findViewById(R.id.bt7);
+        eight = (Button) findViewById(R.id.bt8);
+        nine = (Button) findViewById(R.id.bt9);
+        zero = (Button) findViewById(R.id.bt10);
+        decimal = (Button) findViewById(R.id.btDecimal);
+        delete = (Button) findViewById(R.id.btReset);
+        reset = (Button) findViewById(R.id.btDelete);
+        next = (Button) findViewById(R.id.btNext);
+
+        input = (EditText) findViewById(R.id.amount);
+
+        Editable str = input.getText();
+        next.setEnabled(false);
+        input.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(count>0)
+                {
+                    if(Double.parseDouble(s.toString())>0)
+                        next.setEnabled(true);
+                }
+                //else if (count==1)
+                else if (count > 1 && s.toString().charAt(count)=='.')
+                    next.setEnabled(true);
+
+                else
+                    next.setEnabled(false);
+
+            }
+    });
+
         try
         {
             one.setOnClickListener(this);
@@ -73,12 +115,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+    public void sendMessage(View view)
+    {
+        //Do something
+       /* Intent intent=new Intent(this, DisplayMessageActivity.class);
+        EditText editText=(EditText) findViewById(R.id.edit_message);*/
+
+
+    }
+
 
     @Override
     public void onClick(View arg0)
@@ -144,7 +196,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             break;
             case R.id.btDecimal:
-                String text2=str.toString().trim();
+               String text2=input.getText().toString();
+                if(text2.length()==0)
+                    /*input.setText(str);
+                    input.setSelection(0);*/
+                    break;
+
+
                 if(text2.indexOf(".")<0) {
                     str = str.append(decimal.getText());
                     input.setText(str);
@@ -153,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             break;
             case R.id.btReset:
                 input.setText("");
+                next.setEnabled(false);
             break;
             case R.id.btDelete:
                 int len=str.length();
@@ -161,8 +220,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     text = text.substring(0, len - 1);
                     input.setText(text);
                     input.setSelection(text.length());
+                    if(text.length()==0)
+                        next.setEnabled(false);
                 }
+
             break;
+            case R.id.btNext:
+                Intent intent=new Intent("com.expensesharinginterface.expensesharinginterface.expenseDescription");
+                startActivity(intent);
 
         }
 
