@@ -12,7 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class HomeScreen extends Activity {
@@ -33,6 +44,74 @@ public class HomeScreen extends Activity {
         register = (Button) findViewById(R.id.btn_reg);
         error = (TextView) findViewById(R.id.tv_error);
 
+        ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                /** According with the new StrictGuard policy,  running long tasks on the Main UI thread is not possible
+                 So creating new thread to create and execute http operations */
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+                        postParameters.add(new BasicNameValuePair("email", un.getText().toString()));
+                        postParameters.add(new BasicNameValuePair("password", pw.getText().toString()));
+
+                        String response = null;
+                        try {
+                            HttpPost hp = new HttpPost("http://192.168.0.106:8000/auth/login/");
+                            hp.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
+                            HttpClient ahc = new DefaultHttpClient();
+
+                            HttpResponse response1 = ahc.execute(hp);
+
+                            String res = EntityUtils.toString(response1.getEntity());
+                            JSONObject jsonObject = new JSONObject(res);
+                            if (!jsonObject.has("auth_token")) {
+                                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                                startActivity(intent);
+                                return;
+                            }
+                            String token = (String) jsonObject.get("auth_token");
+                            Log.w("Auth oken", "AUth token : " + token);
+                            if (token == null) {
+                                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                                startActivity(intent);
+                                return;
+                            }
+                            SharedPreferences settings = PreferenceManager
+                                    .getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putString("auth_token", token);
+                            editor.commit();
+
+                            Log.i("Success", token);
+                            resp = res.replaceAll("\\s+", "");
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            errorMsg = e.getMessage();
+                        }
+                    }
+
+                }).start();
+                try {
+                    /** wait a second to get response from server */
+                    Thread.sleep(1000);
+                    /** Inside the new thread we cannot update the main thread
+                     So updating the main thread outside the new thread */
+
+                    error.setText(resp);
+
+                    if (null != errorMsg && !errorMsg.isEmpty()) {
+                        error.setText(errorMsg);
+                    }
+                } catch (Exception e) {
+                    error.setText(e.getMessage());
+                }
+            }
+        });
     }
 
 

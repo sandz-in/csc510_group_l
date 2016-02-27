@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.squareup.retrofit:parent:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }
