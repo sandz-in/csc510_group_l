@@ -96,6 +96,10 @@ public class DashboardActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void addExpenses(View view) {
+        Intent intent = new Intent(view.getContext(), AddExpenses.class);
+        startActivity(intent);
+    }
 
     public void viewExpenses(View view) {
 //        Intent intent = new Intent(view.getContext(), ViewExpenses.class);
