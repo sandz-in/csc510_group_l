@@ -1,0 +1,3 @@
+[submodule "ImageClicker/tess-two"]
+	path = ImageClicker/tess-two
+	url = https://github.com/ZealGanatra/tess-two

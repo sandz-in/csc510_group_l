@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">ExpenseTracking</string>
-
-
-    <string name="expenses">Expenses</string>
-
-    <string name="logout">Logout</string>
-    <string name="title_activity_dashboard">Home</string>
-</resources>
