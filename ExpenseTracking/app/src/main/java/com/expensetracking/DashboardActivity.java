@@ -5,17 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.expensetracking.api.Expenses;
 import com.expensetracking.api.RestAdapter;
 import com.expensetracking.api.UserAPI;
-import com.expensetracking.models.Expense;
 import com.expensetracking.models.User;
 import com.expensetracking.utils.APIUtils;
 
@@ -24,8 +19,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -37,6 +30,8 @@ import retrofit.Retrofit;
  * Created by sandz on 02/27/16.
  */
 public class DashboardActivity extends Activity {
+
+    private static final int CAM_REQUEST = 1313;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +97,15 @@ public class DashboardActivity extends Activity {
     }
 
     public void viewExpenses(View view) {
-//        Intent intent = new Intent(view.getContext(), ViewExpenses.class);
-//        startActivity(intent);
+        Intent intent = new Intent(view.getContext(), ImageClicker.class);
+        startActivity(intent);
     }
 
+
+    public void createCameraActivity(View view){
+        Intent intent = new Intent(view.getContext(), ImageClicker.class);
+        startActivity(intent);
+    }
     private void logout() {
         try {
             HttpPost hp = new HttpPost(RestAdapter.URL +"/auth/logout/");

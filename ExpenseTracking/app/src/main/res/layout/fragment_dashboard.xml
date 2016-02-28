@@ -25,4 +25,17 @@
         android:onClick="addExpenses"
         android:layout_alignParentStart="true" />
 
+    <Button android:id="@+id/button1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Enter expense using image"
+        android:onClick="createCameraActivity"
+        android:layout_below="@+id/btViewExpenses"></Button>
+
+    <ImageView android:id="@+id/imageview1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_below="@+id/button1"/>
+
 </RelativeLayout>

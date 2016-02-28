@@ -2,30 +2,14 @@ package com.expensetracking;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.expensetracking.api.RestAdapter;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 
 public class HomeScreen extends Activity {
@@ -34,6 +18,8 @@ public class HomeScreen extends Activity {
     Button ok, register;
     private String resp;
     private String errorMsg;
+
+    ImageView imgTakenPic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

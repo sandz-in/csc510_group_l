@@ -1,4 +1,4 @@
-package com.example.zeal.imageclicker;
+package com.expensetracking;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
@@ -21,6 +23,7 @@ public class ImageClicker extends AppCompatActivity {
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/tee/";
     public static final String lang = "eng";
     private static final String TAG = "ImageClicker.java";
+    public static String EXE_MSG = " Image message";
 
     Button btnClick;
     ImageView imgTakenPic;
@@ -33,7 +36,7 @@ public class ImageClicker extends AppCompatActivity {
 
         if (requestCode == CAM_REQUEST) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-           // imgTakenPic.setImageBitmap(thumbnail);
+             imgTakenPic.setImageBitmap(thumbnail);
             TessBaseAPI baseApi = new TessBaseAPI();
             baseApi.setDebug(true);
 //            String[] paths = new String[]{DATA_PATH, DATA_PATH + "tessdata/"};
@@ -65,6 +68,23 @@ public class ImageClicker extends AppCompatActivity {
             baseApi.setImage(thumbnail);
             String x = baseApi.getUTF8Text();
             Log.i("dd", x == null ? "dddd" : x);
+            String s;
+            if(x==null)
+            {
+                s="dddd";
+            }
+            else
+            {
+                s=x;
+            }
+
+            Intent in = new Intent(this,AddExpenses.class);
+            EditText editMessage = (EditText)findViewById(R.id.amount);
+            TextView textView = (TextView)findViewById(R.id.textView2);
+          //  textView.setText(s);
+            in.putExtra(EXE_MSG,s);
+            startActivity(in);
+
         }
     }
 
