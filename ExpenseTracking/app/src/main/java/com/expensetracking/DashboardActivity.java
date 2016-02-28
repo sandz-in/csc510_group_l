@@ -26,12 +26,8 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-/**
- * Created by sandz on 02/27/16.
- */
-public class DashboardActivity extends Activity {
 
-    private static final int CAM_REQUEST = 1313;
+public class DashboardActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +92,21 @@ public class DashboardActivity extends Activity {
         startActivity(intent);
     }
 
-    public void viewExpenses(View view) {
-        Intent intent = new Intent(view.getContext(), ImageClicker.class);
-        startActivity(intent);
-    }
-
-
     public void createCameraActivity(View view){
         Intent intent = new Intent(view.getContext(), ImageClicker.class);
         startActivity(intent);
     }
+
+    public void smsView(View view) {
+        Intent intent = new Intent(view.getContext(), smsHomepageActivity.class);
+        startActivity(intent);
+    }
+
+    public void viewExpenses(View view) {
+//        Intent intent = new Intent(view.getContext(), AddExpenses.class);
+//        startActivity(intent);
+    }
+
     private void logout() {
         try {
             HttpPost hp = new HttpPost(RestAdapter.URL +"/auth/logout/");
@@ -130,4 +131,3 @@ public class DashboardActivity extends Activity {
 
     }
 }
-

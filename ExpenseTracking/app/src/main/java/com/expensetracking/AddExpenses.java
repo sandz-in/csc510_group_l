@@ -1,26 +1,28 @@
 package com.expensetracking;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.view.View;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.content.Intent;
+import android.text.TextWatcher;
 
 
 public class AddExpenses extends AppCompatActivity implements View.OnClickListener {
 
+    public static String BILL_AMOUNT="AddExpenses.BILL_AMOUNT";
     private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;
     private static Button next;
     private EditText input;
-    private String m;
+    private String billAmount;
    /* public void onClickButtonListener()
     {
         next=(Button) findViewById(R.id.btNext);
@@ -49,20 +51,22 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         next = (Button) findViewById(R.id.btNext);
 
         input = (EditText) findViewById(R.id.amount);
-
-
-        //image intent
-        Intent in = getIntent();
-        m=in.getStringExtra(ImageClicker.EXE_MSG);
-
-
-        Editable str = input.getText();
-        next.setEnabled(false);
+        // Receive intents
+        Intent intent=getIntent();
+        String m=intent.getStringExtra(ImageClicker.EXE_MSG);
 
         if(m!=null) {
             input.setText(m);
             next.setEnabled(true);
             input.setSelection(m.length());
+        }
+        billAmount=intent.getStringExtra(smsBillsActivity.MSG_EXC);
+        Editable str = input.getText();
+        next.setEnabled(false);
+        if(billAmount!=null) {
+            input.setText(billAmount);
+            next.setEnabled(true);
+            input.setSelection(billAmount.length());
         }
         input.addTextChangedListener(new TextWatcher(){
             @Override
@@ -143,7 +147,6 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
 
 
     }
-
 
 
     @Override
@@ -240,7 +243,9 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
 
                 break;
             case R.id.btNext:
-                Intent intent=new Intent("com.expensesharinginterface.expensesharinginterface.expenseDescription");
+                Intent intent=new Intent(this, expenseDescription.class);
+                billAmount=input.getText().toString();
+                intent.putExtra(BILL_AMOUNT, billAmount);
                 startActivity(intent);
 
         }
