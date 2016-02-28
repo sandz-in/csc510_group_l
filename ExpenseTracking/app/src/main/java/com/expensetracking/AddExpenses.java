@@ -18,9 +18,11 @@ import android.text.TextWatcher;
 
 public class AddExpenses extends AppCompatActivity implements View.OnClickListener {
 
+    public static String BILL_AMOUNT="AddExpenses.BILL_AMOUNT";
     private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;
     private static Button next;
     private EditText input;
+    private String billAmount;
    /* public void onClickButtonListener()
     {
         next=(Button) findViewById(R.id.btNext);
@@ -49,11 +51,24 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         next = (Button) findViewById(R.id.btNext);
 
         input = (EditText) findViewById(R.id.amount);
-        Intent intent_voice=getIntent();
-        String value=intent_voice.getStringExtra("amount");
+        // Receive intents
+        Intent intent=getIntent();
+        String m=intent.getStringExtra(ImageClicker.EXE_MSG);
 
+        if(m!=null) {
+            input.setText(m);
+            next.setEnabled(true);
+            input.setSelection(m.length());
+        }
+        billAmount=intent.getStringExtra(smsBillsActivity.MSG_EXC);
+        String value=intent.getStringExtra("amount");
         Editable str = input.getText();
         next.setEnabled(false);
+        if(billAmount!=null) {
+            input.setText(billAmount);
+            next.setEnabled(true);
+            input.setSelection(billAmount.length());
+        }
         input.addTextChangedListener(new TextWatcher(){
             @Override
             public void afterTextChanged(Editable s) {}
@@ -229,7 +244,9 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
 
                 break;
             case R.id.btNext:
-                Intent intent=new Intent("com.expensesharinginterface.expensesharinginterface.expenseDescription");
+                Intent intent=new Intent(this, expenseDescription.class);
+                billAmount=input.getText().toString();
+                intent.putExtra(BILL_AMOUNT, billAmount);
                 startActivity(intent);
 
         }

@@ -3,8 +3,14 @@
 
 
     <string name="expenses">Expenses</string>
-    <string name="speak">speak</string>
+    <string name="action_settings">Settings</string>
+
+
     <string name="logout">Logout</string>
+    <string name="speak">speak</string>
     <string name="title_activity_dashboard">Home</string>
     <string name="title_activity_add_expenses">AddExpenses</string>
+    <string name="title_activity_sms_homepage">smsHomepageActivity</string>
+    <string name="title_activity_sms_bills">smsBillsActivity</string>
+    <string name="title_activity_expense_description">expenseDescription</string>
 </resources>
