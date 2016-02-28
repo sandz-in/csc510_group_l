@@ -28,6 +28,7 @@ public class MyActivity extends Activity {
     private static final String SORT_ORDER="date desc";
     private static final String SMS_INBOX_CONTENT_URI="content://sms/inbox";
     private static final Integer SMS_BODY_INDEX=12;
+    public static final String MSG_PARM="BillAmounts.MSG";
     private ListView list;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,20 +39,20 @@ public class MyActivity extends Activity {
         activityButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getSMSes();
-                //sendIntent();
             }
         });
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                sendIntent();
+                String msg=(String) parent.getItemAtPosition(position);
+                logger.log(Level.INFO, "Msg is : -----"+msg);
+                sendIntent(msg);
             }
         });
 
     }
 
     private void getSMSes() {
-        List bills=new ArrayList();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         Cursor cursor = getContentResolver().query(Uri.parse(SMS_INBOX_CONTENT_URI), null, null, null, SORT_ORDER);
         Integer retIndex;
@@ -67,7 +68,6 @@ public class MyActivity extends Activity {
                 if(number!=null) {
                     logger.log(Level.INFO, ": "+msgData+" : matches the regex pattern");
                     adapter.add(msgData);
-                    bills.add(msgData);
                 }
                 // use msgData
                 logger.log(Level.INFO, msgData);
@@ -78,8 +78,9 @@ public class MyActivity extends Activity {
         }
     }
 
-    private void sendIntent() {
+    private void sendIntent(String msg) {
         Intent intent = new Intent(this, BillsActivity.class);
+        intent.putExtra(MSG_PARM, msg);
         startActivity(intent);
     }
 }

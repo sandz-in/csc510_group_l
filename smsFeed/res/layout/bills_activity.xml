@@ -4,13 +4,14 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="null"
-            android:id="@+id/displayAmount"
-            android:layout_gravity="center_horizontal"
-            />
+    <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+        <requestFocus />
+
+    </EditText>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
