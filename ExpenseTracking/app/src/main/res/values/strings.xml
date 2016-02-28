@@ -9,4 +9,5 @@
     <string name="title_activity_add_expenses">AddExpenses</string>
     <string name="title_activity_sms_homepage">smsHomepageActivity</string>
     <string name="title_activity_sms_bills">smsBillsActivity</string>
+    <string name="title_activity_expense_description">expenseDescription</string>
 </resources>

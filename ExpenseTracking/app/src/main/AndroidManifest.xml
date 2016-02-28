@@ -41,6 +41,10 @@
         <activity
             android:name=".smsBillsActivity"
             android:label="@string/title_activity_sms_bills"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".expenseDescription"
+            android:label="@string/title_activity_expense_description"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

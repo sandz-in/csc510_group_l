@@ -234,7 +234,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
 
                 break;
             case R.id.btNext:
-                Intent intent=new Intent("com.expensesharinginterface.expensesharinginterface.expenseDescription");
+                Intent intent=new Intent(this, expenseDescription.class);
                 startActivity(intent);
 
         }
