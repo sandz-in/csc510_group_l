@@ -3,7 +3,7 @@
 
 
     <string name="expenses">Expenses</string>
-
+    <string name="speak">speak</string>
     <string name="logout">Logout</string>
     <string name="title_activity_dashboard">Home</string>
     <string name="title_activity_add_expenses">AddExpenses</string>

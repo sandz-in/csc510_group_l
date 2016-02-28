@@ -49,6 +49,8 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         next = (Button) findViewById(R.id.btNext);
 
         input = (EditText) findViewById(R.id.amount);
+        Intent intent_voice=getIntent();
+        String value=intent_voice.getStringExtra("amount");
 
         Editable str = input.getText();
         next.setEnabled(false);

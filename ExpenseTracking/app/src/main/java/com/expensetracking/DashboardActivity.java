@@ -101,6 +101,11 @@ public class DashboardActivity extends Activity {
         startActivity(intent);
     }
 
+    public void voiceExpenses(View view) {
+        Intent intent = new Intent(view.getContext(), Voice.class);
+        startActivity(intent);
+    }
+
     public void viewExpenses(View view) {
 //        Intent intent = new Intent(view.getContext(), ViewExpenses.class);
 //        startActivity(intent);
