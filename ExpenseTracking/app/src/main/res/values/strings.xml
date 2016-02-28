@@ -7,4 +7,6 @@
     <string name="logout">Logout</string>
     <string name="title_activity_dashboard">Home</string>
     <string name="title_activity_add_expenses">AddExpenses</string>
+    <string name="title_activity_sms_homepage">smsHomepageActivity</string>
+    <string name="title_activity_sms_bills">smsBillsActivity</string>
 </resources>

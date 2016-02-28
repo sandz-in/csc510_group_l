@@ -49,9 +49,16 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         next = (Button) findViewById(R.id.btNext);
 
         input = (EditText) findViewById(R.id.amount);
-
+        // Receive intents
+        Intent intent=getIntent();
+        String msg=intent.getStringExtra(smsBillsActivity.MSG_EXC);
         Editable str = input.getText();
         next.setEnabled(false);
+        if(msg!=null) {
+            input.setText(msg);
+            next.setEnabled(true);
+            input.setSelection(msg.length());
+        }
         input.addTextChangedListener(new TextWatcher(){
             @Override
             public void afterTextChanged(Editable s) {}

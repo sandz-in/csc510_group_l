@@ -3,6 +3,7 @@
     package="com.expensetracking">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -32,6 +33,14 @@
         <activity
             android:name=".AddExpenses"
             android:label="@string/title_activity_add_expenses"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".smsHomepageActivity"
+            android:label="@string/title_activity_sms_homepage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".smsBillsActivity"
+            android:label="@string/title_activity_sms_bills"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
