@@ -19,11 +19,14 @@ import android.widget.TextView;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import java.util.logging.Logger;
+
 public class ImageClicker extends AppCompatActivity {
     public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/tee/";
     public static final String lang = "eng";
     private static final String TAG = "ImageClicker.java";
     public static String EXE_MSG = " Image message";
+    private static final Logger logger= Logger.getLogger(ImageClicker.class.getName());
 
     Button btnClick;
     ImageView imgTakenPic;

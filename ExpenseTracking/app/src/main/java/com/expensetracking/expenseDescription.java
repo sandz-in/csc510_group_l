@@ -23,6 +23,12 @@ public class expenseDescription extends AppCompatActivity {
         // Get Intent parameters
         Intent intent = getIntent();
         billAmount=intent.getStringExtra(AddExpenses.BILL_AMOUNT);
+        if(billAmount!=null) {
+            logger.log(Level.INFO, "Received the billAmount intent parameter with the value : "+billAmount);
+        }
+        else {
+            logger.log(Level.INFO, "Received a null intent parameter");
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense_description);
@@ -44,5 +50,4 @@ public class expenseDescription extends AppCompatActivity {
         billDesc=editText.getText().toString();
         logger.log(Level.INFO, "Sending the billAmount: "+billAmount+" and billDesc : "+billDesc);
     }
-
 }

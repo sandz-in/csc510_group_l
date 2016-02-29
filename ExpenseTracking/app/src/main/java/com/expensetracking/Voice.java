@@ -13,11 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class Voice extends Activity {
 
     public static String MSG_EXCHG="Voice.AMOUNT";
     protected static final int RESULT_SPEECH = 1;
+    private static final Logger logger= Logger.getLogger(Voice.class.getName());
 
     private ImageButton btnSpeak;
     private TextView txtText;

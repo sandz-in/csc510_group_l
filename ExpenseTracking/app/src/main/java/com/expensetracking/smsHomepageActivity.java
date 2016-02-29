@@ -69,18 +69,17 @@ public class smsHomepageActivity extends Activity {
                     logger.log(Level.INFO, ": "+msgData+" : matches the regex pattern");
                     adapter.add(msgData);
                 }
-                // use msgData
-                logger.log(Level.INFO, msgData);
             } while (cursor.moveToNext());
             list.setAdapter(adapter);
         } else {
-            // empty box, no SMS
+            logger.log(Level.INFO, "Empty SMS Inbox");
         }
     }
 
     private void sendIntent(String msg) {
         Intent intent = new Intent(this, smsBillsActivity.class);
         intent.putExtra(MSG_PARM, msg);
+        logger.log(Level.INFO, "Sending the following intent : smsHomepageActivity to smsBillsActivity with the parameter : "+msg);
         startActivity(intent);
     }
 }

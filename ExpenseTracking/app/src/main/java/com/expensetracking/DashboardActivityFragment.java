@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.logging.Logger;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class DashboardActivityFragment extends Fragment {
+    private static final Logger logger= Logger.getLogger(DashboardActivityFragment.class.getName());
 
     public DashboardActivityFragment() {
     }

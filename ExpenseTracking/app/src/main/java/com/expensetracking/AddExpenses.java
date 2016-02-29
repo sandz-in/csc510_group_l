@@ -15,21 +15,18 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.text.TextWatcher;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class AddExpenses extends AppCompatActivity implements View.OnClickListener {
 
     public static String BILL_AMOUNT="AddExpenses.BILL_AMOUNT";
+    private static final Logger logger= Logger.getLogger(AddExpenses.class.getName());
     private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;
     private static Button next;
     private EditText input;
     private String billAmount;
-   /* public void onClickButtonListener()
-    {
-        next=(Button) findViewById(R.id.btNext);
-        next.setOnClickListener( new View.OnClickListener(){
-
-        });
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +54,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         String m=intent.getStringExtra(ImageClicker.EXE_MSG);
 
         if(m!=null) {
+            logger.log(Level.INFO, "Received Intent from ImageClicker with parameter : "+m);
             input.setText(m);
             next.setEnabled(true);
             input.setSelection(m.length());
@@ -64,12 +62,14 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         billAmount=intent.getStringExtra(smsBillsActivity.MSG_EXC);
         String voiceAmount=intent.getStringExtra(Voice.MSG_EXCHG);
         if(voiceAmount!=null) {
+            logger.log(Level.INFO, "Received Intent from VoiceInput with parameter : "+voiceAmount);
             input.setText(voiceAmount);
             next.setEnabled(true);
             input.setSelection(voiceAmount.length());
         }
         Editable str = input.getText();
         if(billAmount!=null) {
+            logger.log(Level.INFO, "Received Intent from SMSFeed with parameter : "+billAmount);
             input.setText(billAmount);
             next.setEnabled(true);
             input.setSelection(billAmount.length());
@@ -159,6 +159,8 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
     public void onClick(View arg0)
     {
         Editable str=input.getText();
+        logger.log(Level.INFO, "str before AddExpenses.onClick() : "+str.toString());
+        logger.log(Level.INFO, "Button pressed"+arg0.getId());
         switch(arg0.getId())
         {
             case R.id.bt1:
@@ -255,6 +257,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
 
         }
+        logger.log(Level.INFO, "str at the end of AddExpenses.onClick() : "+str.toString());
 
     }
 
