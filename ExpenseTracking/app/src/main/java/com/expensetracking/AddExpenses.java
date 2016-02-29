@@ -49,6 +49,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         delete = (Button) findViewById(R.id.btReset);
         reset = (Button) findViewById(R.id.btDelete);
         next = (Button) findViewById(R.id.btNext);
+        next.setEnabled(false);
 
         input = (EditText) findViewById(R.id.amount);
         // Receive intents
@@ -61,9 +62,13 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             input.setSelection(m.length());
         }
         billAmount=intent.getStringExtra(smsBillsActivity.MSG_EXC);
-        String value=intent.getStringExtra("amount");
+        String voiceAmount=intent.getStringExtra(Voice.MSG_EXCHG);
+        if(voiceAmount!=null) {
+            input.setText(voiceAmount);
+            next.setEnabled(true);
+            input.setSelection(voiceAmount.length());
+        }
         Editable str = input.getText();
-        next.setEnabled(false);
         if(billAmount!=null) {
             input.setText(billAmount);
             next.setEnabled(true);

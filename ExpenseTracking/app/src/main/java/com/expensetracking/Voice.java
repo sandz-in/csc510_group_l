@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Voice extends Activity {
 
+    public static String MSG_EXCHG="Voice.AMOUNT";
     protected static final int RESULT_SPEECH = 1;
 
     private ImageButton btnSpeak;
@@ -24,7 +25,7 @@ public class Voice extends Activity {
     public void nextPage(View view) {
         Intent intent = new Intent(view.getContext(), AddExpenses.class);
         String value=txtText.getText().toString();
-        intent.putExtra("amount",value);
+        intent.putExtra(MSG_EXCHG,value);
         startActivity(intent);
     }
 
