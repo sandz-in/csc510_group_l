@@ -54,7 +54,7 @@ public class APIUtils {
         return " Token " + getAuthorizationToken();
     }
 
-    public boolean run(final String amount, final String description) {
+    public boolean run(final String amount, final String description, final String billType) {
         this.amount = amount;
         this.description = description;
 
@@ -66,7 +66,7 @@ public class APIUtils {
                         addConverterFactory(GsonConverterFactory.create()).build();
 
                 Expenses expenses = restAdapter.create(Expenses.class);
-                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(), amount, description, "USD");
+                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(), amount, description, billType, "USD");
                 repos1.enqueue(new Callback<Result>() {
 
                     @Override
