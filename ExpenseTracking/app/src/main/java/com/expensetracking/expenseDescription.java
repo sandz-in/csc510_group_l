@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.expensetracking.utils.APIUtils;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,9 +18,11 @@ public class expenseDescription extends AppCompatActivity {
 
     private String billAmount=null;
     private String billDesc=null;
+    private expenseDescription addExpenses;
     private static final Logger logger= Logger.getLogger(expenseDescription.class.getName());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        addExpenses = this;
 
         // Get Intent parameters
         Intent intent = getIntent();
@@ -49,5 +53,7 @@ public class expenseDescription extends AppCompatActivity {
         final EditText editText = (EditText) findViewById(R.id.desc);
         billDesc=editText.getText().toString();
         logger.log(Level.INFO, "Sending the billAmount: "+billAmount+" and billDesc : "+billDesc);
+        APIUtils apiUtils = new APIUtils(addExpenses);
+        apiUtils.run(billAmount, billDesc);
     }
 }
