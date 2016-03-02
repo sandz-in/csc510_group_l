@@ -16,3 +16,7 @@ Demo Time: 3/4/2016 10:00 AM
 * [Solution 3](https://github.com/sandz-in/csc510_group_l/tree/master/smsFeed): Identify the expense via SMS. SMS sent by the bank is read and the total amount is extracted.
 * [Solution 4](https://github.com/sandz-in/csc510_group_l/tree/master/ExpenseSharingInterface): Improved Keyboard compared to Splitwise.
 
+**Telemetry**
+* We collect the expense submission method used for every request as metadata from the application.
+* This metadata is captured in the backend against which we run queries to gather facts such as most frequently used method for tracking expenses in the application.
+
