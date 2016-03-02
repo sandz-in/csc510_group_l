@@ -8,6 +8,8 @@ Expense tracker with improved inputs mechanism
 * [Milestones] (https://github.com/sandz-in/csc510_group_l/milestones)
 * [Contributors] (https://github.com/sandz-in/csc510_group_l/graphs/contributors)
 
+Demo Time: 3/4/2016 10:00 AM
+
 **Solutions**
 * [Solution 1](https://github.com/sandz-in/csc510_group_l/tree/master/ImageClicker): Optical Character Recognition. Captures the receipt and extracts the amount
 * [Solution 2](https://github.com/sandz-in/csc510_group_l/tree/master/Demo): Voice based Input: Listens for the user to speak the total amount and identify the digit.
