@@ -18,6 +18,7 @@ public class expenseDescription extends AppCompatActivity {
 
     private String billAmount=null;
     private String billDesc=null;
+    private String billType=null;
     private expenseDescription addExpenses;
     private static final Logger logger= Logger.getLogger(expenseDescription.class.getName());
     @Override
@@ -31,7 +32,15 @@ public class expenseDescription extends AppCompatActivity {
             logger.log(Level.INFO, "Received the billAmount intent parameter with the value : "+billAmount);
         }
         else {
-            logger.log(Level.INFO, "Received a null intent parameter");
+            logger.log(Level.INFO, "Received a null billAmount intent parameter");
+        }
+
+        billType=intent.getStringExtra(AddExpenses.EXPENSE_SUBMISSION_METHOD);
+        if(billType!=null) {
+            logger.log(Level.INFO, "Received the billType intent parameter with the value : "+billType);
+        }
+        else {
+            logger.log(Level.INFO, "Received a null billType intent parameter");
         }
 
         super.onCreate(savedInstanceState);
@@ -52,8 +61,8 @@ public class expenseDescription extends AppCompatActivity {
     public void postDetails(View view) {
         final EditText editText = (EditText) findViewById(R.id.desc);
         billDesc=editText.getText().toString();
-        logger.log(Level.INFO, "Sending the billAmount: "+billAmount+" and billDesc : "+billDesc);
+        logger.log(Level.INFO, "Sending the billAmount: "+billAmount+" , billDesc : "+billDesc+", billType : "+billType);
         APIUtils apiUtils = new APIUtils(addExpenses);
-        apiUtils.run(billAmount, billDesc);
+        apiUtils.run(billAmount, billDesc, billType);
     }
 }

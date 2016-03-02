@@ -25,6 +25,7 @@ public interface Expenses {
     public Call<Result> addExpenses(@Header("Authorization") String authorization,
                                           @Field("amount") String amount,
                                           @Field("description") String description,
+                                          @Field("billtype") String billtype,
                                           @Field("currency") String currency);
 }
 

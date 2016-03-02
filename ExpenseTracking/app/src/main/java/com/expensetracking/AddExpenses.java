@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.text.TextWatcher;
 
+import com.expensetracking.models.ExpenseSubmissionType;
 import com.expensetracking.utils.APIUtils;
 
 import java.util.logging.Level;
@@ -23,11 +24,13 @@ import java.util.logging.Logger;
 public class AddExpenses extends AppCompatActivity implements View.OnClickListener {
 
     public static String BILL_AMOUNT = "AddExpenses.BILL_AMOUNT";
+    public static String EXPENSE_SUBMISSION_METHOD = "AddExpenses.SUBMISSION_TYPE";
     private static final Logger logger = Logger.getLogger(AddExpenses.class.getName());
     private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;
     private static Button next;
     private EditText input;
     private String billAmount;
+    private String billType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         next.setEnabled(false);
 
         input = (EditText) findViewById(R.id.amount);
+        Editable str = input.getText();
+        next.setEnabled(false);
         // Receive intents
         Intent intent = getIntent();
         String m = intent.getStringExtra(ImageClicker.EXE_MSG);
@@ -59,17 +64,17 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             input.setText(m);
             next.setEnabled(true);
             input.setSelection(m.length());
+            billType= ExpenseSubmissionType.IMAGE.toString();
         }
-        billAmount = intent.getStringExtra(smsBillsActivity.MSG_EXC);
         String voiceAmount = intent.getStringExtra(Voice.MSG_EXCHG);
         if (voiceAmount != null) {
             logger.log(Level.INFO, "Received Intent from VoiceInput with parameter : " + voiceAmount);
             input.setText(voiceAmount);
             next.setEnabled(true);
             input.setSelection(voiceAmount.length());
+            billType=ExpenseSubmissionType.VOICE.toString();
         }
-        Editable str = input.getText();
-        next.setEnabled(false);
+        billAmount = intent.getStringExtra(smsBillsActivity.MSG_EXC);
         if (billAmount != null)
 
         {
@@ -77,6 +82,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             input.setText(billAmount);
             next.setEnabled(true);
             input.setSelection(billAmount.length());
+            billType=ExpenseSubmissionType.SMS.toString();
         }
 
         input.addTextChangedListener(new TextWatcher() {
@@ -257,7 +263,13 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             case R.id.btNext:
                 Intent intent = new Intent(this, expenseDescription.class);
                 billAmount = input.getText().toString();
+                if(billType.isEmpty()) {
+                    billType=ExpenseSubmissionType.MANUAL.toString();
+                }
+                intent.putExtra(EXPENSE_SUBMISSION_METHOD, billType);
                 intent.putExtra(BILL_AMOUNT, billAmount);
+                logger.log(Level.INFO, "Sending Intent to expenseDescription with params : ");
+                logger.log(Level.INFO, "Submission Type : "+billType+", Bill Amount : "+billAmount);
                 startActivity(intent);
 
         }

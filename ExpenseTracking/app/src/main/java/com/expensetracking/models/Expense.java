@@ -33,6 +33,10 @@ public class Expense {
     @Expose
     private String description;
 
+    @SerializedName("billtype")
+    @Expose
+    private String billtype;
+
     /**
      * @return The currency
      */
@@ -101,6 +105,20 @@ public class Expense {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return The description
+     */
+    public String getBilltype() {
+        return billtype;
+    }
+
+    /**
+     * @param billtype The billtype
+     */
+    public void setBilltype(String billtype) {
+        this.billtype = billtype;
     }
 
 }
