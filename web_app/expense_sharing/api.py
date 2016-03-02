@@ -15,17 +15,19 @@ class ExpensesAPI(views.APIView):
     )
 
     def get(self, request):
-        user = request.user
-        print user.email
-        result = []
-        expenses = Expenses.objects.filter(user=user)
+        try:
+            user = request.user
+            print user.email
+            result = []
+            expenses = Expenses.objects.filter(user=user)
 
-        for expense in expenses:
-            expense_dict = {"id": expense.pk, "amount": expense.amount, "description": expense.description,
-                            "currency": expense.currency, "added_on": expense.added_on}
-            result.append(expense_dict)
-        return HttpResponse(json.dumps(result), content_type="application/json")
-
+            for expense in expenses:
+                expense_dict = {"id": expense.pk, "amount": expense.amount, "description": expense.description,
+                                "currency": expense.currency, "added_on": str(expense.added_on)}
+                result.append(expense_dict)
+            return HttpResponse(json.dumps(result), content_type="application/json")
+        except Exception as e:
+            print e
 
 class ExpenseShowAPI(views.APIView):
     permission_classes = (
@@ -52,6 +54,7 @@ class ExpensesAddAPI(views.APIView):
     def post(self, request):
         result = {"result": "success", "message": "Successfully added"}
         try:
+            print "Adddddddd"
             user = request.user
             expense = Expenses()
             expense.amount = request.POST.get("amount")
