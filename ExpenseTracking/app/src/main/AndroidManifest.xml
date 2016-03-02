@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--<user-feature-->
+        <!--android:name="android.hardware.camera2"-->
+        <!--android:required="true" />-->
 
     <application
         android:allowBackup="true"
@@ -46,8 +51,7 @@
             android:name=".expenseDescription"
             android:label="@string/title_activity_expense_description"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Voice" />
+        <activity android:name=".Voice" />
 
         <activity
             android:name=".ImageClicker"
