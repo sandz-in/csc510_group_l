@@ -15,9 +15,12 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.text.TextWatcher;
 
+import com.expensetracking.utils.APIUtils;
+
 
 public class AddExpenses extends AppCompatActivity implements View.OnClickListener {
 
+    private AddExpenses addExpenses;
     private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;
     private static Button next;
     private EditText input;
@@ -34,6 +37,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expenses);
         one = (Button) findViewById(R.id.bt1);
+        addExpenses = this;
         two = (Button) findViewById(R.id.bt2);
         three = (Button) findViewById(R.id.bt3);
         four = (Button) findViewById(R.id.bt4);
@@ -52,9 +56,10 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
 
         Editable str = input.getText();
         next.setEnabled(false);
-        input.addTextChangedListener(new TextWatcher(){
+        input.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
@@ -64,10 +69,11 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                if(count>0)
-                {
-                    if(Double.parseDouble(s.toString())>0)
+                if (count > 0) {
+                    if (Double.parseDouble(s.toString()) > 0)
                         next.setEnabled(true);
+                    APIUtils apiUtils = new APIUtils(addExpenses);
+                    apiUtils.run(3.33f, "hello");
                 }
                 //else if (count==1)
                 else if (count > 1 && s.toString().charAt(count)=='.')
