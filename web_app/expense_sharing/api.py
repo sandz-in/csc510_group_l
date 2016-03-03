@@ -23,11 +23,13 @@ class ExpensesAPI(views.APIView):
 
             for expense in expenses:
                 expense_dict = {"id": expense.pk, "amount": expense.amount, "description": expense.description,
-                                "currency": expense.currency, "added_on": str(expense.added_on)}
+                                "currency": expense.currency, "added_on": str(expense.added_on),
+                                "billtype": expense.billtype}
                 result.append(expense_dict)
             return HttpResponse(json.dumps(result), content_type="application/json")
         except Exception as e:
             print e
+
 
 class ExpenseShowAPI(views.APIView):
     permission_classes = (
@@ -40,7 +42,8 @@ class ExpenseShowAPI(views.APIView):
             expense = Expenses.objects.get(pk=expense_id)
             if user.pk == expense.user.pk:
                 expense_dict = {"id": expense.pk, "amount": expense.amount, "description": expense.description,
-                                "currency": expense.currency, "added_on": str(expense.added_on)}
+                                "currency": expense.currency, "added_on": str(expense.added_on),
+                                "billtype": expense.billtype}
                 return HttpResponse(json.dumps(expense_dict), content_type="application/json")
         except Exception as e:
             print e
@@ -54,12 +57,12 @@ class ExpensesAddAPI(views.APIView):
     def post(self, request):
         result = {"result": "success", "message": "Successfully added"}
         try:
-            print "Adddddddd"
             user = request.user
             expense = Expenses()
             expense.amount = request.POST.get("amount")
             expense.currency = request.POST.get("currency")
             expense.description = request.POST.get("description")
+            expense.billtype = request.POST.get("billtype")
             expense.user = user
             expense.save()
         except Exception as e:

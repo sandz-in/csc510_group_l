@@ -53,6 +53,7 @@ class User(AbstractBaseUser):
 class Expenses(models.Model):
     amount = models.FloatField()
     description = models.CharField(max_length=512)
+    billtype = models.CharField(max_length=128, null=True)
     user = models.ForeignKey(User)
     currency = models.CharField(max_length=8)
     # image = models.ImageField()
