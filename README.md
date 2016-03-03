@@ -19,4 +19,4 @@ Demo Time: 3/4/2016 10:00 AM
 **Telemetry**
 * We collect the expense submission method used for every request as metadata from the application.
 * This metadata is captured in the backend against which we run queries to gather facts such as most frequently used method for tracking expenses in the application.
-
+* Also, the number of delete actions are captured. This can be used to measure the approxmiate accuracy of the solution.
