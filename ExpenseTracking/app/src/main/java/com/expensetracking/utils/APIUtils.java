@@ -38,6 +38,8 @@ public class APIUtils {
     private String amount;
     private String description;
     private String billType;
+    public static Long startTime;
+
 
     public APIUtils(Activity activity) {
         this.activity = activity;
@@ -55,7 +57,7 @@ public class APIUtils {
         return " Token " + getAuthorizationToken();
     }
 
-    public boolean addExpense(final String amount, final String description, final String billType) {
+    public boolean addExpense(final String amount, final String description, final String billType, final double duration) {
         this.amount = amount;
         this.description = description;
         this.billType = billType;
@@ -68,7 +70,7 @@ public class APIUtils {
                         addConverterFactory(GsonConverterFactory.create()).build();
 
                 Expenses expenses = restAdapter.create(Expenses.class);
-                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(), amount, description, billType, "USD");
+                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(), amount, description, billType, "USD", duration);
                 repos1.enqueue(new Callback<Result>() {
 
                     @Override

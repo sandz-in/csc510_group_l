@@ -63,7 +63,8 @@ public class expenseDescription extends AppCompatActivity {
         billDesc=editText.getText().toString();
         logger.log(Level.INFO, "Sending the billAmount: "+billAmount+" , billDesc : "+billDesc+", billType : "+billType);
         APIUtils apiUtils = new APIUtils(addExpenses);
-        apiUtils.addExpense(billAmount, billDesc, billType);
+        Double duration = (System.currentTimeMillis() - APIUtils.startTime) / 1000d;
+        apiUtils.addExpense(billAmount, billDesc, billType, duration);
         Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
 

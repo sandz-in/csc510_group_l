@@ -26,7 +26,8 @@ public interface Expenses {
                                     @Field("amount") String amount,
                                     @Field("description") String description,
                                     @Field("billtype") String billtype,
-                                    @Field("currency") String currency);
+                                    @Field("currency") String currency,
+                                    @Field("duration") double duration);
 
     @FormUrlEncoded
     @POST("/api/action/delete/")

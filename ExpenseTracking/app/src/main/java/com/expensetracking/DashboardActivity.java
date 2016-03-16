@@ -92,24 +92,28 @@ public class DashboardActivity extends Activity {
     }
 
     public void addExpenses(View view) {
+        APIUtils.startTime = System.currentTimeMillis();
         Intent intent = new Intent(view.getContext(), AddExpenses.class);
         logger.log(Level.INFO, "Sending the following intent : DashboardActivity to AddExpenses activity");
         startActivity(intent);
     }
 
-    public void createCameraActivity(View view){
+    public void createCameraActivity(View view) {
+        APIUtils.startTime = System.currentTimeMillis();
         Intent intent = new Intent(view.getContext(), ImageClicker.class);
         logger.log(Level.INFO, "Sending the following intent : DashboardActivity to Image Scan activity");
         startActivity(intent);
     }
 
     public void smsView(View view) {
+        APIUtils.startTime = System.currentTimeMillis();
         Intent intent = new Intent(view.getContext(), smsHomepageActivity.class);
         logger.log(Level.INFO, "Sending the following intent : DashboardActivity to smsView activity");
         startActivity(intent);
     }
 
     public void voiceExpenses(View view) {
+        APIUtils.startTime = System.currentTimeMillis();
         Intent intent = new Intent(view.getContext(), Voice.class);
         logger.log(Level.INFO, "Sending the following intent : DashboardActivity to voiceExpenses activity");
         startActivity(intent);
@@ -122,7 +126,7 @@ public class DashboardActivity extends Activity {
 
     private void logout() {
         try {
-            HttpPost hp = new HttpPost(RestAdapter.URL +"/auth/logout/");
+            HttpPost hp = new HttpPost(RestAdapter.URL + "/auth/logout/");
             APIUtils apiUtils = new APIUtils(this);
             String authorizationToken = apiUtils.getHeaderAuthorizationToken();
 
