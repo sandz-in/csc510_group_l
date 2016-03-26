@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 public class AddExpenses extends AppCompatActivity implements View.OnClickListener {
 
     public static String BILL_AMOUNT = "AddExpenses.BILL_AMOUNT";
+    public static String BILL_DESC = "AddExpenses.BILL_DESC";
     public static String EXPENSE_SUBMISSION_METHOD = "AddExpenses.SUBMISSION_TYPE";
     public static String EXPENSE_DESCRIPTION = "AddExpenses.EXPENSE_DESCRIPTION";
     private static final Logger logger = Logger.getLogger(AddExpenses.class.getName());
@@ -73,7 +74,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             input.setText(m);
             next.setEnabled(true);
             input.setSelection(m.length());
-            billType= ExpenseSubmissionType.IMAGE.toString();
+            billType = ExpenseSubmissionType.IMAGE.toString();
         }
         String voiceAmount = intent.getStringExtra(Voice.MSG_EXCHG);
         if (voiceAmount != null) {
@@ -81,7 +82,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             input.setText(voiceAmount);
             next.setEnabled(true);
             input.setSelection(voiceAmount.length());
-            billType=ExpenseSubmissionType.VOICE.toString();
+            billType = ExpenseSubmissionType.VOICE.toString();
         }
         billAmount = intent.getStringExtra(smsBillsActivity.MSG_EXC);
         if (billAmount != null) {
@@ -89,7 +90,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             input.setText(billAmount);
             next.setEnabled(true);
             input.setSelection(billAmount.length());
-            billType=ExpenseSubmissionType.SMS.toString();
+            billType = ExpenseSubmissionType.SMS.toString();
         }
 
         billDesc=intent.getStringExtra(smsBillsActivity.SMS_BILL_DESC);
@@ -111,21 +112,23 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 if (count > 0) {
-                    if (Double.parseDouble(s.toString()) > 0)
-                        next.setEnabled(true);
+                    try {
+                        if (s.length() > 0)
+                            next.setEnabled(true);
+                    } catch (Exception e) {
+
+                    }
                 }
                 //else if (count==1)
-                else if (count > 1 && s.toString().charAt(count)=='.')
+                else if (count > 1 && s.toString().charAt(count) == '.')
                     next.setEnabled(true);
-
                 else
                     next.setEnabled(false);
 
             }
         });
 
-        try
-        {
+        try {
             one.setOnClickListener(this);
             two.setOnClickListener(this);
             three.setOnClickListener(this);
@@ -141,9 +144,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             reset.setOnClickListener(this);
             next.setOnClickListener(this);
 
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
@@ -267,6 +268,8 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
                     text = text.substring(0, len - 1);
                     input.setText(text);
                     input.setSelection(text.length());
+                    APIUtils apiUtils = new APIUtils(this);
+                    apiUtils.addDeleteAction(billType);
                     if (text.length() == 0)
                         next.setEnabled(false);
                 }
@@ -275,8 +278,8 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             case R.id.btNext:
                 Intent intent = new Intent(this, expenseDescription.class);
                 billAmount = input.getText().toString();
-                if(billType.isEmpty()) {
-                    billType=ExpenseSubmissionType.MANUAL.toString();
+                if (billType.isEmpty()) {
+                    billType = ExpenseSubmissionType.MANUAL.toString();
                 }
                 intent.putExtra(EXPENSE_SUBMISSION_METHOD, billType);
                 intent.putExtra(BILL_AMOUNT, billAmount);

@@ -53,8 +53,16 @@ class User(AbstractBaseUser):
 class Expenses(models.Model):
     amount = models.FloatField()
     description = models.CharField(max_length=512)
+    billtype = models.CharField(max_length=128, null=True, default="manual")
     user = models.ForeignKey(User)
     currency = models.CharField(max_length=8)
     # image = models.ImageField()
     # notes = models.CharField(max_length=1024)
+    added_on = models.DateTimeField(auto_now_add=True)
+    duration = models.FloatField(null=True)
+
+
+class DeleteAction(models.Model):
+    user = models.ForeignKey(User)
+    billtype = models.CharField(max_length=128, null=True, default="manual")
     added_on = models.DateTimeField(auto_now_add=True)

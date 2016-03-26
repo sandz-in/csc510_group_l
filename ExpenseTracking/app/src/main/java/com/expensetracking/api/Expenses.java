@@ -23,9 +23,15 @@ public interface Expenses {
     @FormUrlEncoded
     @POST("/api/expense/add/")
     public Call<Result> addExpenses(@Header("Authorization") String authorization,
-                                          @Field("amount") String amount,
-                                          @Field("description") String description,
-                                          @Field("billtype") String billtype,
-                                          @Field("currency") String currency);
+                                    @Field("amount") String amount,
+                                    @Field("description") String description,
+                                    @Field("billtype") String billtype,
+                                    @Field("currency") String currency,
+                                    @Field("duration") double duration);
+
+    @FormUrlEncoded
+    @POST("/api/action/delete/")
+    public Call<Result> addDeleteAction(@Header("Authorization") String authorization, @Field("billtype") String billtype);
+
 }
 
