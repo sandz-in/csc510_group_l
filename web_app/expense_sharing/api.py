@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from rest_framework import views
 from rest_framework import permissions
 
-from expense_sharing.models import Expenses
+from expense_sharing.models import Expenses, DeleteAction
 
 __author__ = 'sandz'
 
@@ -63,8 +63,29 @@ class ExpensesAddAPI(views.APIView):
             expense.currency = request.POST.get("currency")
             expense.description = request.POST.get("description")
             expense.billtype = request.POST.get("billtype")
+            expense.duration = request.POST.get("duration")
             expense.user = user
             expense.save()
+        except Exception as e:
+            result["result"] = "failure"
+            result["message"] = "Failed to apply"
+            print e
+        return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+class DeleteActionAPI(views.APIView):
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+
+    def post(self, request):
+        result = {"result": "success", "message": "Successfully added"}
+        try:
+            user = request.user
+            delete_action = DeleteAction()
+            delete_action.user = user
+            delete_action.billtype = request.POST.get("billtype")
+            delete_action.save()
         except Exception as e:
             result["result"] = "failure"
             result["message"] = "Failed to apply"
