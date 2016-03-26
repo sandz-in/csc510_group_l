@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 public class AddExpenses extends AppCompatActivity implements View.OnClickListener {
 
     public static String BILL_AMOUNT = "AddExpenses.BILL_AMOUNT";
+    public static String BILL_DESC = "AddExpenses.BILL_DESC";
     public static String EXPENSE_SUBMISSION_METHOD = "AddExpenses.SUBMISSION_TYPE";
     private static final Logger logger = Logger.getLogger(AddExpenses.class.getName());
     private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;

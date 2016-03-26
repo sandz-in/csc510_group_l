@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 public class Voice extends Activity {
 
     public static String MSG_EXCHG="Voice.AMOUNT";
+    public static String DESC="Voice.DESC";
     protected static final int RESULT_SPEECH = 1;
     private static final Logger logger= Logger.getLogger(Voice.class.getName());
 
@@ -27,10 +28,35 @@ public class Voice extends Activity {
     public void nextPage(View view) {
         Intent intent = new Intent(view.getContext(), AddExpenses.class);
         String value=txtText.getText().toString();
-        intent.putExtra(MSG_EXCHG,value);
+        if(!isNumeric(value)){
+        String amt=value.substring(value.indexOf('$')+1);
+        amt=amt.substring(0,amt.indexOf(' '));
+        intent.putExtra(MSG_EXCHG, amt);
+        logger.info(amt);
+        //startActivity(intent);
+        String description=(value.substring(value.indexOf("at ")+3)).trim();
+        intent.putExtra(DESC,description);
+            logger.info(description);
+        }
+        else{
+            intent.putExtra(MSG_EXCHG, value);
+        }
+
+
         startActivity(intent);
     }
 
+    public boolean isNumeric(String s){
+        try
+        {
+            double d = Double.parseDouble(s);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
