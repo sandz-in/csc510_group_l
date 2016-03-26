@@ -28,6 +28,7 @@ public class Voice extends Activity {
     public void nextPage(View view) {
         Intent intent = new Intent(view.getContext(), AddExpenses.class);
         String value=txtText.getText().toString();
+        if(!isNumeric(value)){
         String amt=value.substring(value.indexOf('$')+1);
         amt=amt.substring(0,amt.indexOf(' '));
         intent.putExtra(MSG_EXCHG, amt);
@@ -35,10 +36,27 @@ public class Voice extends Activity {
         //startActivity(intent);
         String description=(value.substring(value.indexOf("at ")+3)).trim();
         intent.putExtra(DESC,description);
-        logger.info(description);
+            logger.info(description);
+        }
+        else{
+            intent.putExtra(MSG_EXCHG, value);
+        }
+
+
         startActivity(intent);
     }
 
+    public boolean isNumeric(String s){
+        try
+        {
+            double d = Double.parseDouble(s);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
