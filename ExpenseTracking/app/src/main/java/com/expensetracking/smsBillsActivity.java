@@ -14,10 +14,12 @@ import java.util.logging.Logger;
 
 public class smsBillsActivity extends Activity {
 
-    public static String MSG_EXC="smsBillsActivity.MSG_EXCHANGE";
+    public static String MSG_EXC="smsBillsActivity.billAmount";
+    public static String SMS_BILL_DESC="smsBillsActivity.billDescription";
     private EditText editText;
     private static final Logger logger= Logger.getLogger(smsBillsActivity.class.getName());
     private String billAmount=null;
+    private String billDesc="test";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class smsBillsActivity extends Activity {
     public void updateBill(View view) {
         Intent intent = new Intent(view.getContext(), AddExpenses.class);
         intent.putExtra(MSG_EXC, billAmount);
+        intent.putExtra(SMS_BILL_DESC, billDesc);
         logger.log(Level.INFO, "Sending the following intent : smsBillsActivity to AddExpenses activity with the parameter : "+billAmount);
         startActivity(intent);
     }
