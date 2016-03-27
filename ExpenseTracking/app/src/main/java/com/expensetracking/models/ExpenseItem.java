@@ -37,6 +37,13 @@ public class ExpenseItem {
         this.txnDuration=txn;
     }
 
+    public void setAmtDelCounts(Integer amtDel) {
+        this.amtDelCounts=amtDel;
+    }
+    public void setAmtEditCounts(Integer amtEdit) {
+        this.amtEditCounts=amtEdit;
+    }
+
     // Getters
     public String getBillAmount() {
         return billAmount;

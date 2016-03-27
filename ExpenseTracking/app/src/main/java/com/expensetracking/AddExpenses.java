@@ -29,6 +29,8 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
     public static String BILL_DESC = "AddExpenses.BILL_DESC";
     public static String EXPENSE_SUBMISSION_METHOD = "AddExpenses.SUBMISSION_TYPE";
     public static String EXPENSE_DESCRIPTION = "AddExpenses.EXPENSE_DESCRIPTION";
+    public static String AMT_DEL_KEYSTROKES = "AddExpenses.AMT_DEL";
+    public static String AMT_EDIT_KEYSTROKES = "AddExpenses.AMT_EDIT";
     private static final Logger logger = Logger.getLogger(AddExpenses.class.getName());
     private Button one, two, three, four, five, six, seven, eight, nine, zero, decimal, delete, reset;
     private static Button next;

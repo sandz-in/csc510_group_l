@@ -15,6 +15,8 @@ import android.widget.EditText;
 import com.expensetracking.models.ExpenseItem;
 import com.expensetracking.utils.APIUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +36,7 @@ public class expenseDescription extends AppCompatActivity {
         String billDesc=null;
         String billType=null;
         String descBefore=null;
+        String amtDel=null, amtEdit=null;
 
         // Get Intent parameters
         Intent intent = getIntent();
@@ -63,11 +66,30 @@ public class expenseDescription extends AppCompatActivity {
             logger.log(Level.INFO, "Received a null billDesc intent parameter");
         }
 
-        descBefore = editText.getText().toString();
-        logger.log(Level.INFO, "Initial snapshot of expense description : "+descBefore);
-
         expense = new ExpenseItem(descBefore, billType);
         expense.setBillAmount(billAmount);
+
+        amtDel=intent.getStringExtra(AddExpenses.AMT_DEL_KEYSTROKES);
+        if(!StringUtils.isBlank(amtDel)) {
+            logger.log(Level.INFO, "Received the amtDel intent parameter with the value : " + amtDel);
+            expense.setAmtDelCounts(Integer.parseInt(amtDel));
+        }
+        else {
+            logger.log(Level.INFO, "Received a null amtDel intent parameter");
+        }
+
+        amtEdit=intent.getStringExtra(AddExpenses.AMT_EDIT_KEYSTROKES);
+        if(!StringUtils.isBlank(amtEdit)) {
+            logger.log(Level.INFO, "Received the amtEdit intent parameter with the value : "+amtEdit);
+            expense.setAmtEditCounts(Integer.parseInt(amtEdit));
+        }
+        else {
+            logger.log(Level.INFO, "Received a null amtEdit intent parameter");
+        }
+
+        descBefore = editText.getText().toString();
+        logger.log(Level.INFO, "Initial snapshot of expense description : " + descBefore);
+
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -126,5 +148,7 @@ public class expenseDescription extends AppCompatActivity {
         logger.log(Level.INFO, "TELEMETRY: Final billDesc : "+expense.getBillDesc());
         logger.log(Level.INFO, "TELEMETRY: DESC Delete keystrokes for this expense : "+expense.getDescDelCounter());
         logger.log(Level.INFO, "TELEMETRY: DESC Edit keystrokes for this expense : "+expense.getDescEditCounter());
+        logger.log(Level.INFO, "TELEMETRY: AMT Delete keystrokes for this expense : "+expense.getAmtDelCounter());
+        logger.log(Level.INFO, "TELEMETRY: AMT Edit keystrokes for this expense : "+expense.getAmtEditCounter());
     }
 }
