@@ -40,30 +40,6 @@ public class expenseDescription extends AppCompatActivity {
         // Get Intent parameters
         Intent intent = getIntent();
         editText = (EditText) findViewById(R.id.desc);
-
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                logger.log(Level.INFO, "before Text changed() called");
-                descBefore = editText.getText().toString();
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                logger.log(Level.INFO, "on Text changed() called, "+s.toString()+"\t"+start+"\t"+before+"\t"+count);
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                logger.log(Level.INFO, "after Text changed() called, changed to "+s.toString());
-                descAfter = s.toString();
-            }
-        });
-
-
         billAmount=intent.getStringExtra(AddExpenses.BILL_AMOUNT);
         if(billAmount != null) {
             logger.log(Level.INFO, "Received the billAmount intent parameter with the value : "+billAmount);
@@ -88,6 +64,34 @@ public class expenseDescription extends AppCompatActivity {
         else {
             logger.log(Level.INFO, "Received a null billDesc intent parameter");
         }
+
+        descBefore = editText.getText().toString();
+        logger.log(Level.INFO, "Initial snapshot of expense description : "+descBefore);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                logger.log(Level.INFO, "before Text changed() called");
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                logger.log(Level.INFO, "on Text changed() called, "+s.toString()+"\t"+start+"\t"+before+"\t"+count);
+                if(count==0) {
+                    deleteCounts++;
+                }
+                else {
+                    editCounts+=(count-before);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                logger.log(Level.INFO, "after Text changed() called, changed to "+s.toString());
+                descAfter = s.toString();
+            }
+        });
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -103,12 +107,20 @@ public class expenseDescription extends AppCompatActivity {
 
     public void postDetails(View view) {
         billDesc=editText.getText().toString();
-        logger.log(Level.INFO, "Sending the billAmount: "+billAmount+" , billDesc : "+billDesc+", billType : "+billType);
+        logger.log(Level.INFO, "Sending the billAmount: "+billAmount+" ,billType : "+billType);
+        logTelemetryData();
         APIUtils apiUtils = new APIUtils(addExpenses);
         Double duration = (System.currentTimeMillis() - APIUtils.startTime) / 1000d;
         apiUtils.addExpense(billAmount, billDesc, billType, duration);
         Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
 
+    }
+
+    private void logTelemetryData() {
+        logger.log(Level.INFO, "TELEMETRY: Initial billDesc : "+descBefore);
+        logger.log(Level.INFO, "TELEMETRY: Final billDesc : "+descAfter);
+        logger.log(Level.INFO, "TELEMETRY: Delete keystrokes for this expense : "+deleteCounts);
+        logger.log(Level.INFO, "TELEMETRY: Edit keystrokes for this expense : "+editCounts);
     }
 }

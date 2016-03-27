@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.text.TextWatcher;
+import org.apache.commons.lang3.StringUtils;
 
 import com.expensetracking.models.ExpenseSubmissionType;
 import com.expensetracking.utils.APIUtils;
@@ -278,14 +279,14 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             case R.id.btNext:
                 Intent intent = new Intent(this, expenseDescription.class);
                 billAmount = input.getText().toString();
-                if (billType.isEmpty()) {
+                if (StringUtils.isBlank(billType)) {
                     billType = ExpenseSubmissionType.MANUAL.toString();
                 }
                 intent.putExtra(EXPENSE_SUBMISSION_METHOD, billType);
                 intent.putExtra(BILL_AMOUNT, billAmount);
                 logger.log(Level.INFO, "Sending Intent to expenseDescription with params : ");
                 logger.log(Level.INFO, "Submission Type : " + billType + ", Bill Amount : " + billAmount);
-                if(!billDesc.isEmpty()) {
+                if(!StringUtils.isBlank(billDesc)) {
                     intent.putExtra(EXPENSE_DESCRIPTION, billDesc);
                     logger.log(Level.INFO, "Sending Expense Desc : "+billDesc);
                 }
