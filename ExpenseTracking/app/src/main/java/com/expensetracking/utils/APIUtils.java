@@ -9,6 +9,7 @@ import android.util.Log;
 import com.expensetracking.DashboardActivity;
 import com.expensetracking.api.Expenses;
 import com.expensetracking.api.RestAdapter;
+import com.expensetracking.models.ExpenseItem;
 import com.expensetracking.models.Result;
 
 import org.apache.http.HttpResponse;
@@ -57,10 +58,10 @@ public class APIUtils {
         return " Token " + getAuthorizationToken();
     }
 
-    public boolean addExpense(final String amount, final String description, final String billType, final double duration) {
-        this.amount = amount;
-        this.description = description;
-        this.billType = billType;
+    public boolean addExpense(final ExpenseItem expense) {
+        this.amount = expense.getBillAmount();
+        this.description = expense.getBillDesc();
+        this.billType = expense.getBillType();
 
         new Thread(new Runnable() {
 
@@ -70,7 +71,7 @@ public class APIUtils {
                         addConverterFactory(GsonConverterFactory.create()).build();
 
                 Expenses expenses = restAdapter.create(Expenses.class);
-                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(), amount, description, billType, "USD", duration);
+                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(), amount, description, billType, "USD", expense.getTxnDuration());
                 repos1.enqueue(new Callback<Result>() {
 
                     @Override
