@@ -60,6 +60,11 @@ class Expenses(models.Model):
     # notes = models.CharField(max_length=1024)
     added_on = models.DateTimeField(auto_now_add=True)
     duration = models.FloatField(null=True)
+    initial_description = models.CharField(max_length=512, null=True)
+    amount_delete_keystroke = models.IntegerField(null=True)
+    amount_others_keystroke = models.IntegerField(null=True)
+    description_delete_keystroke = models.IntegerField(null=True)
+    description_others_keystroke = models.IntegerField(null=True)
 
 
 class DeleteAction(models.Model):

@@ -64,6 +64,11 @@ class ExpensesAddAPI(views.APIView):
             expense.description = request.POST.get("description")
             expense.billtype = request.POST.get("billtype")
             expense.duration = request.POST.get("duration")
+            expense.initial_description = request.POST.get("initial_description")
+            expense.amount_delete_keystroke = request.POST.get("amount_delete_keystroke")
+            expense.amount_others_keystroke = request.POST.get("amount_others_keystroke")
+            expense.description_delete_keystroke = request.POST.get("description_delete_keystroke")
+            expense.description_others_keystroke = request.POST.get("description_others_keystroke")
             expense.user = user
             expense.save()
         except Exception as e:
