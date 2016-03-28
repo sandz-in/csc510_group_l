@@ -11,6 +11,8 @@ import java.text.ParseException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class smsBillsActivity extends Activity {
 
@@ -19,7 +21,7 @@ public class smsBillsActivity extends Activity {
     private EditText editText;
     private static final Logger logger= Logger.getLogger(smsBillsActivity.class.getName());
     private String billAmount=null;
-    private String billDesc="test";
+    private String billDesc="";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,7 @@ public class smsBillsActivity extends Activity {
         String msg=intent.getStringExtra(smsHomepageActivity.MSG_PARM);
         logger.log(Level.INFO, "Received Intent parameter : "+msg);
         editText = (EditText) findViewById(R.id.editText);
+        Pattern pattern = Pattern.compile(smsHomepageActivity.AMT_REGEX);
         Number number=null;
         try {
             number = NumberFormat.getCurrencyInstance(Locale.US).parse(msg);
@@ -38,6 +41,26 @@ public class smsBillsActivity extends Activity {
             editText.setText(number.toString());
             billAmount=number.toString();
         }
+        else {
+            // Try the raw text regex
+            String[] tokens = msg.split(" ");
+            Integer counter=0;
+            for(String temp: tokens) {
+                Matcher matcher = pattern.matcher(temp);
+                if (matcher.find()) {
+                    editText.setText(matcher.group(0));
+                    billAmount=matcher.group(0);
+                    break;
+                }
+            }
+            Integer result=0;
+            for(;counter<tokens.length && result <= 3;counter++) {
+                if(isAllUpper(tokens[counter])) {
+                    billDesc+=tokens[counter]+" ";
+                    result++;
+                }
+            }
+        }
     }
 
     public void updateBill(View view) {
@@ -46,5 +69,17 @@ public class smsBillsActivity extends Activity {
         intent.putExtra(SMS_BILL_DESC, billDesc);
         logger.log(Level.INFO, "Sending the following intent : smsBillsActivity to AddExpenses activity with the parameter : "+billAmount);
         startActivity(intent);
+    }
+
+    private static boolean isAllUpper(String s) {
+        for(char c : s.toCharArray()) {
+            if(Character.isLetter(c) && Character.isLowerCase(c)) {
+                return false;
+            }
+            if(Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
