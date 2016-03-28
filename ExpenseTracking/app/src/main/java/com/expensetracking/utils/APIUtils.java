@@ -71,7 +71,10 @@ public class APIUtils {
                         addConverterFactory(GsonConverterFactory.create()).build();
 
                 Expenses expenses = restAdapter.create(Expenses.class);
-                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(), amount, description, billType, "USD", expense.getTxnDuration());
+                Call<Result> repos1 = expenses.addExpenses(getHeaderAuthorizationToken(),
+                        amount, description, billType, "USD", expense.getTxnDuration(),
+                        expense.getInitBillDesc(), expense.getAmtDelCounter(),
+                        expense.getAmtEditCounter(), expense.getDescDelCounter(), expense.getDescEditCounter());
                 repos1.enqueue(new Callback<Result>() {
 
                     @Override

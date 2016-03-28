@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.text.TextWatcher;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.expensetracking.models.ExpenseSubmissionType;
@@ -38,9 +40,13 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
     private String billAmount;
     private String billType="";
     private String billDesc="";
+    private int amountEditKeyStrokes = 0;
+    private int amountDeleteKeyStrokes = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        amountEditKeyStrokes = 0;
+        amountDeleteKeyStrokes = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expenses);
         one = (Button) findViewById(R.id.bt1);
@@ -193,46 +199,55 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
                 str = str.append(one.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt2:
                 str = str.append(two.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt3:
                 str = str.append(three.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt4:
                 str = str.append(four.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt5:
                 str = str.append(five.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt6:
                 str = str.append(six.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt7:
                 str = str.append(seven.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt8:
                 str = str.append(eight.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt9:
                 str = str.append(nine.getText());
                 input.setText(str);
                 input.setSelection(str.length());
+                amountEditKeyStrokes++;
                 break;
             case R.id.bt10:
                 String text3 = str.toString();
@@ -248,6 +263,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.btDecimal:
                 String text2 = input.getText().toString();
+                amountEditKeyStrokes++;
                 if (text2.length() == 0)
                     /*input.setText(str);
                     input.setSelection(0);*/
@@ -276,6 +292,7 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
                     if (text.length() == 0)
                         next.setEnabled(false);
                 }
+                amountDeleteKeyStrokes++;
 
                 break;
             case R.id.btNext:
@@ -284,6 +301,12 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
                 if (StringUtils.isBlank(billType)) {
                     billType = ExpenseSubmissionType.MANUAL.toString();
                 }
+
+                Log.i("EDIT KEYSTROKES", "" + amountEditKeyStrokes);
+                Log.i("DEL KEYSTROKES", "" + amountDeleteKeyStrokes);
+
+                intent.putExtra(AMT_EDIT_KEYSTROKES, "" + amountEditKeyStrokes);
+                intent.putExtra(AMT_DEL_KEYSTROKES, "" + amountDeleteKeyStrokes);
                 intent.putExtra(EXPENSE_SUBMISSION_METHOD, billType);
                 intent.putExtra(BILL_AMOUNT, billAmount);
                 logger.log(Level.INFO, "Sending Intent to expenseDescription with params : ");

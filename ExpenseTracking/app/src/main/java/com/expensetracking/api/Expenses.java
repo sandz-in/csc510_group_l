@@ -27,7 +27,14 @@ public interface Expenses {
                                     @Field("description") String description,
                                     @Field("billtype") String billtype,
                                     @Field("currency") String currency,
-                                    @Field("duration") double duration);
+                                    @Field("duration") double duration,
+                                    @Field("initial_description") String initBillDesc,
+                                    @Field("amount_delete_keystroke") String amtDelCounts,
+                                    @Field("amount_others_keystroke") String amtEditCounts,
+                                    @Field("description_delete_keystroke") String descDelCounts,
+                                    @Field("description_others_keystroke") String descEditCounts
+
+                                    );
 
     @FormUrlEncoded
     @POST("/api/action/delete/")
