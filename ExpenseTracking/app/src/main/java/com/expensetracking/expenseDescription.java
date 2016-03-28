@@ -65,9 +65,10 @@ public class expenseDescription extends AppCompatActivity {
         else {
             logger.log(Level.INFO, "Received a null billDesc intent parameter");
         }
-
+        descBefore=editText.getText().toString();
         expense = new ExpenseItem(descBefore, billType);
         expense.setBillAmount(billAmount);
+        expense.setBillDesc(descBefore);
 
         amtDel=intent.getStringExtra(AddExpenses.AMT_DEL_KEYSTROKES);
         if(!StringUtils.isBlank(amtDel)) {

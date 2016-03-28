@@ -92,7 +92,12 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             next.setEnabled(true);
             input.setSelection(voiceAmount.length());
             billType = ExpenseSubmissionType.VOICE.toString();
+            billDesc = intent.getStringExtra(Voice.VOICE_DESC);
+            if(!StringUtils.isBlank(billDesc)) {
+                logger.log(Level.INFO, "Received bill desc from VoiceInput with param : "+billDesc);
+            }
         }
+
         billAmount = intent.getStringExtra(smsBillsActivity.MSG_EXC);
         if (billAmount != null) {
             logger.log(Level.INFO, "Received Intent from SMSFeed with parameter : " + billAmount);
@@ -100,11 +105,10 @@ public class AddExpenses extends AppCompatActivity implements View.OnClickListen
             next.setEnabled(true);
             input.setSelection(billAmount.length());
             billType = ExpenseSubmissionType.SMS.toString();
-        }
-
-        billDesc=intent.getStringExtra(smsBillsActivity.SMS_BILL_DESC);
-        if(billDesc!=null) {
-            logger.log(Level.INFO, "Received bill desc from SMSFeed with param : "+billDesc);
+            billDesc=intent.getStringExtra(smsBillsActivity.SMS_BILL_DESC);
+            if(!StringUtils.isBlank(billDesc)) {
+                logger.log(Level.INFO, "Received bill desc from SMSFeed with param : "+billDesc);
+            }
         }
 
         input.addTextChangedListener(new TextWatcher() {

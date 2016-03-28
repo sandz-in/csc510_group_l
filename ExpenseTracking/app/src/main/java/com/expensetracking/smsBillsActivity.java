@@ -54,7 +54,7 @@ public class smsBillsActivity extends Activity {
                 }
             }
             Integer result=0;
-            for(;counter<tokens.length && result <= 3;counter++) {
+            for(;counter<tokens.length && result < 3;counter++) {
                 if(isAllUpper(tokens[counter])) {
                     billDesc+=tokens[counter]+" ";
                     result++;
