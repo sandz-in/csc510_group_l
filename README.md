@@ -38,4 +38,4 @@ There are three methods of telemetry implemented for further evaluation -
 
 Evaluation can also be done by taking feedback from the users who initially participated in the survey for the project. The users can evaluate the different solutions based on their accuracy, ease of usage and whether the solutions are able to mitigate the earlier drawbacks of the cost sharing applications.
 
-April Deliverable : http://bit.ly/1VCodcX
+**April Deliverable** http://bit.ly/1VCodcX
