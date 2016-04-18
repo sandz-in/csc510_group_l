@@ -1,0 +1,45 @@
+Graph 1) select billtype as "Solution",count(*) as "Total Usage" from expense_sharing_expenses group by billtype;
+
+Graph 2)
+select billtype as "Solution",count(*) as "Total Usage",round(sum(duration),2) as "Total Time",round(sum(duration),2)/count(*) as "Average Time" from expense_sharing_expenses ese inner join expense_sharing_user esu on ese.user_id=esu.id group by billtype ;
+
+Graph 3)
+SELECT user_id,
+COUNT(CASE WHEN billtype = 'manual' THEN 1 END)AS `manual_count`,
+ROUND(SUM(CASE WHEN billtype = 'manual' THEN duration END),2)AS 'manual_total_duration',
+ROUND((SUM(CASE WHEN billtype = 'manual' THEN duration END)/COUNT(CASE WHEN billtype = 'manual' THEN 1 END)),2) as 'manual_average',
+
+COUNT(CASE WHEN billtype = 'sms' THEN 1 END)AS `sms_count`,
+ROUND(SUM(CASE WHEN billtype = 'sms' THEN duration END),2)AS 'sms_total_duration',
+ROUND((SUM(CASE WHEN billtype = 'sms' THEN duration END)/COUNT(CASE WHEN billtype = 'sms' THEN 1 END)),2) as 'sms_average',
+
+COUNT(CASE WHEN billtype = 'image' THEN 1 END)AS `image_count`,
+ROUND(SUM(CASE WHEN billtype = 'image' THEN duration END),2)AS 'image_total_duration',
+ROUND((SUM(CASE WHEN billtype = 'image' THEN duration END)/COUNT(CASE WHEN billtype = 'image' THEN 1 END)),2) as 'image_average',
+
+COUNT(CASE WHEN billtype = 'voice' THEN 1 END)AS `voice_count`,
+ROUND(SUM(CASE WHEN billtype = 'voice' THEN duration END),2)AS 'voice_total_duration',
+ROUND((SUM(CASE WHEN billtype = 'voice' THEN duration END)/COUNT(CASE WHEN billtype = 'voice' THEN 1 END)),2) as 'voice_average'
+
+from expense_sharing_expenses group by user_id;
+
+Graph 4)
+// amount keystroke efficiency
+Select billtype as solution, sum((char_length(amount) - amount_delete_keystroke - amount_others_keystroke)/char_length(amount))/count(*) as amount_keystroke_efficiency from expense_sharing_expenses group by billtype;
+
+// description keystroke efficiency
+Select billtype as solution, sum((char_length(description) - description_delete_keystroke - description_others_keystroke)/char_length(description))/count(*) as description_keystroke_efficiency from expense_sharing_expenses group by billtype;
+
+
+Graph 5)
+// uif for the amount field
+Select billtype as solution, sum(amount_delete_keystroke/char_length(amount))/count(*) as uif_delete_amount from expense_sharing_expenses group by billtype;
+
+Select billtype as solution, sum(amount_others_keystroke/char_length(amount))/count(*) as uif_edit_amount from expense_sharing_expenses group by billtype;
+
+Graph 6)
+// uif for the desc field
+Select billtype as solution, sum(description_delete_keystroke/char_length(description))/count(*) as uif_delete_desc from expense_sharing_expenses group by billtype;
+
+Select billtype as solution, sum(description_others_keystroke/char_length(description))/count(*) as uif_edit_desc from expense_sharing_expenses group by billtype;
+

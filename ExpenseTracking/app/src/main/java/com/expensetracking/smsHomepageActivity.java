@@ -18,12 +18,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class smsHomepageActivity extends Activity {
     /**
      * Called when the activity is first created.
      */
-
+    public static final String AMT_REGEX="^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$";
     private static final Logger logger= Logger.getLogger(smsHomepageActivity.class.getName());
     private static final String SORT_ORDER="date desc";
     private static final String SMS_INBOX_CONTENT_URI="content://sms/inbox";
@@ -55,7 +57,8 @@ public class smsHomepageActivity extends Activity {
     private void getSMSes() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         Cursor cursor = getContentResolver().query(Uri.parse(SMS_INBOX_CONTENT_URI), null, null, null, SORT_ORDER);
-        Integer retIndex;
+        Pattern tok = Pattern.compile("\\w+");
+        Pattern pattern = Pattern.compile(AMT_REGEX);
         if (cursor.moveToFirst()) { // must check the result to prevent exception
             do {
                 String msgData=cursor.getString(SMS_BODY_INDEX);
@@ -65,22 +68,34 @@ public class smsHomepageActivity extends Activity {
                 } catch(ParseException pe) {
                     number=null;
                 }
+
                 if(number!=null) {
-                    logger.log(Level.INFO, ": "+msgData+" : matches the regex pattern");
+                    logger.log(Level.INFO, ": "+msgData+" : matches the number format pattern");
                     adapter.add(msgData);
                 }
-                // use msgData
-                logger.log(Level.INFO, msgData);
+                else {
+                    // Try the raw text regex
+                    String[] tokens = msgData.split(" ");
+                    for(String temp: tokens) {
+                        Matcher matcher = pattern.matcher(temp);
+                        if (matcher.find()) {
+                            logger.log(Level.INFO, msgData+" matches the raw text regex pattern");
+                            adapter.add(msgData);
+                            break;
+                        }
+                    }
+                }
             } while (cursor.moveToNext());
             list.setAdapter(adapter);
         } else {
-            // empty box, no SMS
+            logger.log(Level.INFO, "Empty SMS Inbox");
         }
     }
 
     private void sendIntent(String msg) {
         Intent intent = new Intent(this, smsBillsActivity.class);
         intent.putExtra(MSG_PARM, msg);
+        logger.log(Level.INFO, "Sending the following intent : smsHomepageActivity to smsBillsActivity with the parameter : "+msg);
         startActivity(intent);
     }
 }

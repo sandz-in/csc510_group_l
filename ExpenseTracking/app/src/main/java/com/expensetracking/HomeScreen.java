@@ -26,12 +26,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 
 public class HomeScreen extends Activity {
-    EditText un, pw;
-    TextView error;
-    Button ok, register;
+    private static final Logger logger= Logger.getLogger(HomeScreen.class.getName());
+    private EditText un, pw;
+    private TextView error;
+    private Button ok, register;
     private String resp;
     private String errorMsg;
 

@@ -7,14 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('expense_sharing', '0001_initial'),
+        ('expense_sharing', '0006_deleteaction'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='expenses',
-            name='currency',
-            field=models.CharField(default='ss', max_length=8),
-            preserve_default=False,
+            model_name='deleteaction',
+            name='billtype',
+            field=models.CharField(max_length=128, null=True),
         ),
     ]

@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--<user-feature-->
+        <!--android:name="android.hardware.camera2"-->
+        <!--android:required="true" />-->
 
     <application
         android:allowBackup="true"
@@ -24,11 +29,6 @@
         <activity
             android:name=".DashboardActivity"
             android:label="@string/title_activity_dashboard">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".AddExpenses"
@@ -46,16 +46,12 @@
             android:name=".expenseDescription"
             android:label="@string/title_activity_expense_description"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Voice" />
 
         <activity
             android:name=".ImageClicker"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
